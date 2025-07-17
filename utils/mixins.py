@@ -1,22 +1,31 @@
 """Generic mixins."""
 
 from inspect import getmembers
+from typing import Generic, TypeVar
 
+from django.db.models import Model
 from rest_framework import status
-from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
+from rest_framework.viewsets import GenericViewSet
 
 
 def _is_extra_action(attr):
     return hasattr(attr, "mapping")
 
 
-class BaseGenericViewSet(GenericAPIView):
+ModelType = TypeVar("ModelType", bound=Model)
+
+
+class BaseGenericViewSet(GenericViewSet, Generic[ModelType]):
     """
     A GenericAPIView that provides actions to the `get_serializer_class` and
     `get_serializer` methods.
     """
+
+    def get_object(self) -> ModelType:
+        """Same as get_object() but returns ModelType, allowing for typing hints."""
+        return super().get_object()
 
     def get_serializer_class(self, action=None):
         """Return the serializer class depending on request method."""

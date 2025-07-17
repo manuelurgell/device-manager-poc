@@ -45,6 +45,8 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "devices",
+    "hubs",
+    "dwellings",
 ]
 
 INSTALLED_APPS += THIRD_PARTY_APPS + LOCAL_APPS
