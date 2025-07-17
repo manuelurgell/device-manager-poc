@@ -1,0 +1,2 @@
+class DeviceAlreadyPairedError(Exception):
+    pass
